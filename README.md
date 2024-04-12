@@ -31,11 +31,22 @@ Highly video, feature-packed flutter_flexible_calendar widget for Flutter.
 | :------------: |
 | **Horizontal** |
 
+| ![Image](https://raw.githubusercontent.com/kdrtech/flutter_flexible_calendar/master/example/assets/single.gif)
+| :------------: |
+| **Single selected** |
+
+| ![Image](https://raw.githubusercontent.com/kdrtech/flutter_flexible_calendar/master/example/assets/multiple.gif)
+| :------------: |
+| **Multiple select** |
+
 ## Features
 
 * Standar calendar user interface
 * Hotizontal calendar user interface 
 * Calendar header change month and year.
+* New Feature: Support the multiple select  the same month.
+* New Feature: Support range select with default start select and end select the same month.
+* New Feature: Support set default single select date.
 
 ## Usage
 
@@ -103,6 +114,63 @@ dependencies:
     didWeekendItemClick: () {},
 )
 ```
+***&#11088;Single Select***
+```dart
+ FlutterFlexibleCalendarView(
+    showHeader: true,
+    headerBgColor: Colors.white38,
+    calendarType: FlutterFlexibleCalendarType.standard,
+    showWeekendDay: false,
+    disabledPreDay: true,
+    colorBg: Colors.transparent,
+    maxLimitYear: 2,
+    minLimitYear: 2,
+    month: DateTime(_currentMonth.year, _currentMonth.month, 1),
+    isMultipleSelected: false,
+    currentSelected: DateTime(2024, 4, 24),
+    didResult: (item, datetime) {
+     if (kDebugMode) {
+        print(
+            "date selected: ${item?.date}, ${item?.dateTime}, ${item?.nameOffWeek}");
+      }
+    },
+    didDisableItemClick: () {},
+    didWeekendItemClick: () {},
+)
+```
+***&#11088;Multiple Select***
+```dart
+ FlutterFlexibleCalendarView(
+    showHeader: true,
+    headerBgColor: Colors.white38,
+    calendarType: FlutterFlexibleCalendarType.standard,
+    showWeekendDay: false,
+    disabledPreDay: true,
+    colorBg: Colors.transparent,
+    maxLimitYear: 2,
+    minLimitYear: 2,
+    month: DateTime(_currentMonth.year, _currentMonth.month, 1),
+    isMultipleSelected: true,
+    setStartSelected: DateTime(2024, 4, 13),
+    setEndSelected: DateTime(2024, 4, 19),
+    didResult: (item, datetime) {
+      if (kDebugMode) {
+        print(
+            "date selected: ${item?.date}, ${item?.dateTime}, ${item?.nameOffWeek}");
+      }
+    },
+    didMultipleSelected: (firstDate, lastDate) {
+      if (kDebugMode) {
+        print(
+            "firstDate: ${firstDate?.date}, ${firstDate?.dateTime}, ${firstDate?.nameOffWeek}");
+        print(
+            "lastDate: ${lastDate?.date}, ${lastDate?.dateTime}, ${lastDate?.nameOffWeek}");
+      }
+    },
+    didDisableItemClick: () {},
+    didWeekendItemClick: () {},
+)
+```
 ### Parameter
 ```dart
 * showHeader : show calendar header. 
@@ -119,6 +187,10 @@ dependencies:
 * didWeekendItemClick: function to return status when click on weekend of day.
 * headerArrowLeft: allow change arrow left header icon.
 * headerArrowRight: allow change arrow right header icon.
+* isMultipleSelected : allow set multiple select (true , false)
+* setStartSelected: set default start date select(Ex:  DateTime(2024, 4, 13))
+* setEndSelected: set default end date select(Ex:  DateTime(2024, 4, 19))
+* currentSelected: set default single date select(Ex: DateTime(2024, 4, 24))
 * other you can check our class.
   ```
 ### Events
@@ -147,6 +219,13 @@ didWeekendItemClick: () {
 }
 ```
 
+use `didMultipleSelected` to return first date select and last date select.
+
+```dart
+didMultipleSelected: (firstDate, lastDate) {
+
+}
+```
 
 Hello everyone 👋
 
